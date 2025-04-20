@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<script>// ВНИМАНИЕ
+        // эта хуета это ai generated slop сделанный потому что почему нет
+        // код сам по себе ужасен, если решите чёто делать с ним, то лучше подумайте дважды
+        // НО ОН РАБОТАЕТ, и это главное
+        // а, ну и фанфакт
+        // этот псевдоскрипт нужен лишь для того, что я не знаю как делать коменты в хтмл
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube 2.5 - Просмотр</title>
+    <script>
+        // Применяем тему сразу при загрузке
+        (function() {
+            try {
+                if (localStorage.getItem('yt25-dark') === 'true') {
+                    document.documentElement.classList.add('dark-mode');
+                }
+            } catch(e) {}
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --card-bg: #ffffff;
+        }
+        
+        :root.dark-mode {
+            --bg-color: #0f0f0f;
+            --text-color: #ffffff;
+            --card-bg: #222222;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-color);
+            color: var(--text-color);
+            overscroll-behavior: none;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ddd;
+            background: var(--card-bg);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff0000;
+            text-decoration: none;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .player {
+            width: 100%;
+            background: #000;
+        }
+
+        .title {
+            font-size: 24px;
+            margin: 20px 0 10px;
+        }
+
+        .meta {
+            color: #606060;
+            margin-bottom: 20px;
+        }
+        
+        .dark-mode .meta {
+            color: #aaaaaa;
+        }
+
+        .description {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">YouTube 2.5</a>
+        <button class="theme-toggle" id="themeToggle">🌓</button>
+    </header>
+
+    <div class="container">
+        <video class="player" controls id="video-player"></video>
+        <h1 class="title" id="video-title"></h1>
+        <div class="meta">
+            <span id="video-author"></span> • 
+            <span id="video-date"></span>
+        </div>
+        <div class="description" id="video-description"></div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        // Инициализация темы
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        // Установка начальной иконки
+        if (html.classList.contains('dark-mode')) {
+            themeToggle.textContent = '🌙';
+        } else {
+            themeToggle.textContent = '☀️';
+        }
+        
+        // Переключение темы
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark-mode');
+            const isDark = html.classList.contains('dark-mode');
+            themeToggle.textContent = isDark ? '🌙' : '☀️';
+            
+            // Сохраняем в localStorage
+            try {
+                localStorage.setItem('yt25-dark', isDark);
+            } catch(e) {
+                console.log('Не удалось сохранить настройки');
+            }
+        });
+
+        // Загрузка видео
+        function getVideoId() {
+            return window.location.hash.substring(1);
+        }
+        
+        function loadVideo() {
+            const videoId = getVideoId();
+            const video = videos.find(v => v.id === videoId);
+            
+            if (video) {
+                document.getElementById('video-player').src = `videos/${video.filename}`;
+                document.getElementById('video-title').textContent = video.title;
+                document.getElementById('video-author').textContent = video.author;
+                document.getElementById('video-date').textContent = video.date;
+                document.getElementById('video-description').textContent = video.description;
+            }
+        }
+        
+        window.onload = loadVideo;
+        window.onhashchange = loadVideo;
+    </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<script>// ВНИМАНИЕ
+        // эта хуета это ai generated slop сделанный потому что почему нет
+        // код сам по себе ужасен, если решите чёто делать с ним, то лучше подумайте дважды
+        // НО ОН РАБОТАЕТ, и это главное
+        // а, ну и фанфакт
+        // этот псевдоскрипт нужен лишь для того, что я не знаю как делать коменты в хтмл
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube 2.5</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --card-bg: #ffffff;
+            --shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        :root.dark-mode {
+            --bg-color: #0f0f0f;
+            --text-color: #ffffff;
+            --card-bg: #222222;
+            --shadow: 0 2px 5px rgba(255,255,255,0.1);
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-color);
+            color: var(--text-color);
+            overscroll-behavior: none;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ddd;
+            background: var(--card-bg);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff0000;
+            text-decoration: none;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--text-color);
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 180px;
+            background: #000;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info {
+            padding: 12px;
+        }
+
+        .title {
+            font-weight: bold;
+            margin: 0 0 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .author {
+            color: #606060;
+            font-size: 14px;
+        }
+    </style>
+    <script>
+        // Проверка и применение темы ДО загрузки страницы
+        (function() {
+            try {
+                if (localStorage.getItem('yt25-dark') === 'true') {
+                    document.documentElement.classList.add('dark-mode');
+                }
+            } catch(e) {}
+        })();
+    </script>
+</head>
+<body>
+    <header>
+        <div class="logo">YouTube 2.5</div>
+        <button class="theme-toggle" id="themeToggle">🌓</button>
+    </header>
+
+    <div class="content">
+        <h1>Рекомендуемо</h1>
+        <div class="grid" id="videos-grid"></div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        // Инициализация темы
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        // Установка начальной иконки
+        if (html.classList.contains('dark-mode')) {
+            themeToggle.textContent = '🌙';
+        } else {
+            themeToggle.textContent = '☀️';
+        }
+
+        // Переключение темы
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark-mode');
+            const isDark = html.classList.contains('dark-mode');
+            themeToggle.textContent = isDark ? '🌙' : '☀️';
+            
+            // Сохраняем в localStorage
+            try {
+                localStorage.setItem('yt25-dark', isDark);
+            } catch(e) {
+                console.log('Не удалось сохранить настройки');
+            }
+        });
+
+        // Загрузка видео (без изменений шаблонных строк)
+        const grid = document.getElementById('videos-grid');
+        const shuffled = [...videos].sort(() => Math.random() - 0.5);
+        
+        shuffled.forEach(video => {
+            grid.innerHTML += `
+                <a href="video.html#${video.id}" class="card">
+                    <div class="thumbnail">
+                        <img src="thumbs/${video.id}.jpg" alt="${video.title}">
+                    </div>
+                    <div class="info">
+                        <h3 class="title">${video.title}</h3>
+                        <p class="author">${video.author}</p>
+                    </div>
+                </a>
+            `;
+        });
+    </script>
+</body>
+</html>
